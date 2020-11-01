@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:motors="http://java.sun.com/jsf/composite/componentes"
+    template="../template.xhtml" >
+    
+    <c:set var="cliente" value="#{clienteBean.cliente}" />
+	<c:set var="controller" value="#{clienteBean}" />
+
+	
+	<div class="container">
+        <h1>Adicionar Cliente</h1>
+		<h:messages globalOnly="true" class="alert alert-danger" role="alert" />
+        <h:form>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <h:inputText id="nome" class="form-control" value = "#{cliente.nome}" required="true" requiredMessage="Nome do cliente deve ser preenchido" >
+                	<f:validateLength minimum="2" />
+                </h:inputText>
+                <h:message for="nome" errorStyle="color: red;" />
+            </div>
+            
+            <div class="form-group">
+                <label for="sobrenome">Sobrenome</label>
+                <h:inputText id="sobrenome" class="form-control" value = "#{cliente.sobrenome}" required="true" requiredMessage="Sobrenome do cliente deve ser preenchido">
+                	<f:validateLength minimum="2" />
+                </h:inputText>
+                <h:message for="sobrenome" errorStyle="color: red;" />
+            </div>
+            
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <h:inputText id="cpf" class="form-control cpf-cliente" value = "#{cliente.cpf}" required="true" requiredMessage="CPF do cliente deve ser preenchido">
+                	<f:validateLength minimum="11" maximum="11" />
+                </h:inputText>
+                <h:message for="cpf" errorStyle="color: red;" />
+            </div>
+            
+            <h:commandButton class="btn btn-primary" action="#{controller.salvar(cliente)}" value="Salvar" />
+            <a class="btn btn-secondary" href="index.xhtml">Cancelar</a>
+        </h:form>
+    </div>
+</ui:decorate>

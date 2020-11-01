@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:motors="http://java.sun.com/jsf/composite/componentes"
+    template="../template.xhtml" >
+             
+	<c:set var="controller" value="#{clienteBean}" />
+    
+    <div class="container">
+        <br />
+        
+        <h:messages globalOnly="true" class="alert alert-danger" role="alert" />
+        
+        <h1>Clientes <h:link title="Adicionar cliente" outcome="new"><i class="fa fa-plus fa-3"></i></h:link></h1>
+        <h:form>
+            <h:dataTable class="table table-striped" value="#{controller.clientes}" var="cliente">
+                <h:column>
+                    <f:facet name="header">
+                        Cliente
+                    </f:facet>
+                    #{cliente.nomeCompleto}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        CPF
+                    </f:facet>
+                    #{cliente.cpf}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Ações
+                    </f:facet>
+                    <h:commandLink action="#{controller.editar(cliente.id)}" type="button" class="btn btn-primary icon-button" title="Editar"><i class="fas fa-edit"></i>
+                    </h:commandLink>
+                    <h:commandLink action="#{controller.deletar(cliente.id)}" type="button" class="btn btn-danger icon-button" title="Deletar"><i class="fas fa-trash-alt"></i>
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </div>    
+</ui:decorate>
