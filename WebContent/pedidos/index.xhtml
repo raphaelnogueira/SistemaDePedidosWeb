@@ -9,38 +9,33 @@
     xmlns:motors="http://java.sun.com/jsf/composite/componentes"
     template="../template.xhtml" >
              
-	<c:set var="controller" value="#{clienteBean}" />
+	<c:set var="controller" value="#{pedidoBean}" />
     
     <div class="container">
         <br />
         
         <h:messages globalOnly="true" class="alert alert-danger" role="alert" />
         
-        <h1>Clientes <h:link title="Adicionar cliente" outcome="new"><i class="fa fa-plus fa-3"></i></h:link></h1>
+        <h1>Pedidos <h:link title="Adicionar pedido" outcome="new"><i class="fa fa-plus fa-3"></i></h:link></h1>
         <h:form>
-            <h:dataTable class="table table-striped" value="#{controller.clientes}" var="cliente">
+            <h:dataTable class="table table-striped" value="#{controller.pedidos}" var="pedido">
+                <h:column>
+                    <f:facet name="header">
+                        Número
+                    </f:facet>
+                    #{pedido.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Data
+                    </f:facet>
+                    #{pedido.data}
+                </h:column>
                 <h:column>
                     <f:facet name="header">
                         Cliente
                     </f:facet>
-                    #{cliente.nomeCompleto}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        CPF
-                    </f:facet>
-                    #{cliente.cpf}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Ações
-                    </f:facet>
-                    <h:commandLink action="#{controller.editar(cliente.id)}" type="button" class="btn btn-primary icon-button" title="Editar"><i class="fas fa-edit"></i>
-                    </h:commandLink>
-                    <h:commandLink action="#{controller.deletar(cliente.id)}" type="button" class="btn btn-danger icon-button" title="Deletar"><i class="fas fa-trash-alt"></i>
-                    </h:commandLink>
-                    <h:commandLink action="#{controller.detalhar(cliente.id)}" type="button" class="btn btn-success icon-button" title="Detalhar"><i class="fas fa-eye"></i>
-                    </h:commandLink>
+                    #{pedido.cliente.nomeCompleto}
                 </h:column>
             </h:dataTable>
         </h:form>

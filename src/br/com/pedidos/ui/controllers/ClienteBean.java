@@ -1,6 +1,7 @@
 package br.com.pedidos.ui.controllers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,6 +11,8 @@ import javax.faces.context.FacesContext;
 import br.com.pedidos.application.appservices.ClienteAppService;
 import br.com.pedidos.application.interfaces.appservices.ClienteAppServiceInterface;
 import br.com.pedidos.domain.entities.Cliente;
+import br.com.pedidos.domain.entities.ItemDoPedido;
+import br.com.pedidos.domain.entities.Pedido;
 
 @ManagedBean
 @RequestScoped
@@ -18,6 +21,7 @@ public class ClienteBean implements Serializable {
 	
 	private ClienteAppServiceInterface clienteAppService;
 	private Cliente cliente;
+	private Pedido pedido;
 	private List<Cliente> clientes;
 	
 	@PostConstruct
@@ -44,6 +48,12 @@ public class ClienteBean implements Serializable {
 		this.cliente = clienteAppService.obterPorId(id);
 		
 		return "edit.xhtml";
+	}
+	
+	public String detalhar(Long id) {
+		this.cliente = clienteAppService.obterPorId(id);
+		
+		return "detail.xhtml";
 	}
 	
 	public void salvar(Cliente cliente) {
@@ -80,5 +90,22 @@ public class ClienteBean implements Serializable {
 		        new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
 		    e.printStackTrace();
 		}
+	}
+
+	public Pedido getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	
+	public String getItensSerializadosJson(Pedido pedido) {
+		List<String> itensJson = new ArrayList<String>();
+		for(ItemDoPedido itemDoPedido : pedido.getItens()) {
+			itensJson.add(itemDoPedido.serializeToJson());
+		}
+		
+		return "[" + String.join(",", itensJson) + "]";
 	}
 }

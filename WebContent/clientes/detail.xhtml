@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:motors="http://java.sun.com/jsf/composite/componentes"
+    template="../template.xhtml" >
+             
+	<c:set var="controller" value="#{clienteBean}" />
+    
+    <div class="container">
+        <br />
+        
+        <h:messages globalOnly="true" class="alert alert-danger" role="alert" />
+        
+        <h2>Cliente: #{controller.cliente.nomeCompleto}</h2>
+        <h2>CPF: #{controller.cliente.cpf}</h2>
+        <br/>
+        <br/>
+        <h2>Pedidos</h2>
+        <br/>
+        <h:dataTable class="table table-striped" value="#{controller.cliente.pedidos}" var="pedido">
+            <h:column>
+                <f:facet name="header">
+                    Número pedido
+                </f:facet>
+                #{pedido.id}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Data
+                </f:facet>
+                #{pedido.data}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Quantidade de itens
+                </f:facet>
+                #{pedido.itens.size()}
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    Ações
+                </f:facet>
+                <h:link type="button" class="btn btn-info btn-detalhar" title="Detalhar"><i class="fas fa-list"></i>
+                	<f:passThroughAttribute name="data-toggle" value="modal" />
+                    <f:passThroughAttribute name="data-target" value="#exampleModal" />
+                    <f:passThroughAttribute name="data-itens" value="#{controller.getItensSerializadosJson(pedido)}" />
+                </h:link>
+            </h:column>
+        </h:dataTable>
+    </div> 
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Lista de itens do pedido</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</ui:decorate>

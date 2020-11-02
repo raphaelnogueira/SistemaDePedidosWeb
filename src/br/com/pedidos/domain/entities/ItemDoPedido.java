@@ -56,4 +56,10 @@ public class ItemDoPedido {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
+	
+	public String serializeToJson() {
+		String json = "{\"id\": " + id + ", \"quantidade\": " + quantidade + ", \"produto\": {\"descricao\": \"" + produto.getDescricao() + "\"}}";
+		
+		return json;
+	}
 }

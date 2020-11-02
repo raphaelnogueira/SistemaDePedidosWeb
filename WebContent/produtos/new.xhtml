@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:motors="http://java.sun.com/jsf/composite/componentes"
+    template="../template.xhtml" >
+    
+    <c:set var="produto" value="#{produtoBean.produto}" />
+	<c:set var="controller" value="#{produtoBean}" />
+
+	
+	<div class="container">
+        <h1>Adicionar Produto</h1>
+		<h:messages globalOnly="true" class="alert alert-danger" role="alert" />
+        <h:form>
+            <div class="form-group">
+                <label for="descricao">Descrição</label>
+                <h:inputText id="descricao" class="form-control" value = "#{produto.descricao}" required="true" requiredMessage="Descrição do produto deve ser preenchido" >
+                	<f:validateLength minimum="4" />
+                </h:inputText>
+                <h:message for="descricao" errorStyle="color: red;" />
+            </div>
+            
+            <h:commandButton class="btn btn-primary" action="#{controller.salvar(produto)}" value="Salvar" />
+            <a class="btn btn-secondary" href="index.xhtml">Cancelar</a>
+        </h:form>
+    </div>
+</ui:decorate>

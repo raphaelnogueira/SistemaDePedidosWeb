@@ -1,4 +1,6 @@
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -9,7 +11,11 @@ import br.com.pedidos.domain.entities.Cliente;
 import br.com.pedidos.domain.entities.ItemDoPedido;
 import br.com.pedidos.domain.entities.Pedido;
 import br.com.pedidos.domain.entities.Produto;
+import br.com.pedidos.domain.intefaces.repositories.ItemDoPedidoRepositoryInterface;
+import br.com.pedidos.domain.intefaces.repositories.ProdutoRepositoryInterface;
 import br.com.pedidos.infra.data.config.JpaUtil;
+import br.com.pedidos.infra.data.repositories.ItemDoPedidoRepository;
+import br.com.pedidos.infra.data.repositories.ProdutoRepository;
 
 public class Teste {
 	public static void main(String[] args) {
@@ -37,8 +43,14 @@ public class Teste {
 		EntityManager em = JpaUtil.getEntityManager();
 		
 		Query q = em.createQuery("select p from Produto p where p.id = :id", Produto.class);
-		q.setParameter("id", 1L);
+		q.setParameter("id", 2L);
 		Produto produto = (Produto) q.getSingleResult();
+		
+		ItemDoPedidoRepositoryInterface itemDoPedidoRepository = new ItemDoPedidoRepository();
+		List<ItemDoPedido> itens = itemDoPedidoRepository.obterPorProduto(produto);
+		
+		ProdutoRepositoryInterface prod = new ProdutoRepository();
+		Boolean teste = prod.estaVinculadoPedido(produto);
 		
 		Query q1 = em.createQuery("select c from Cliente c where c.id = :id", Cliente.class);
 		q1.setParameter("id", 4L);
@@ -53,7 +65,7 @@ public class Teste {
 		pedido.setData(new Date());
 		pedido.getItens().add(item);
 		
-		item.setPedido(pedido);
+//		item.setPedido(pedido);
 		
 		
 		EntityTransaction tx = em.getTransaction();

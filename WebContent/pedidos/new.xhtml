@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:motors="http://java.sun.com/jsf/composite/componentes"
+    template="../template.xhtml" >
+    
+    <c:set var="pedido" value="#{pedidoBean.pedido}" />
+    <c:set var="clientes" value="#{pedidoBean.clientes}" />
+	<c:set var="controller" value="#{pedidoBean}" />
+
+	
+	<div class="container">
+        <h1>Adicionar Pedido</h1>
+		<h:messages globalOnly="true" class="alert alert-danger" role="alert" />
+        <h:form>
+            <div class="form-group">
+                <label for="cliente">Cliente</label>
+                <h:selectOneMenu id="cliente" class="form-control" value = "#{pedido.cliente.id}">
+	                <c:forEach var="cliente" items="#{clientes}">
+						<f:selectItem itemValue = "#{cliente.id}" itemLabel = "#{cliente.nomeCompleto}" />	
+					</c:forEach> 
+				</h:selectOneMenu> 
+            </div>
+            
+            <c:forEach var="item" items="#{pedido.itens}">
+	            <div class="form-row">
+	            	<h:inputHidden value="#{item.produto.id}"></h:inputHidden>
+				    <div class="col-2">
+				     	<label>#{item.produto.descricao}</label>
+				    </div>
+				    <div class="col-1">
+				    	<h:selectOneMenu class="form-control" value = "#{item.quantidade}">
+					  		<f:selectItem itemValue = "0" itemLabel = "0" />
+					  		<f:selectItem itemValue = "1" itemLabel = "1" />
+					  		<f:selectItem itemValue = "2" itemLabel = "2" />
+					  		<f:selectItem itemValue = "3" itemLabel = "3" />
+					  		<f:selectItem itemValue = "4" itemLabel = "4" /> 
+						</h:selectOneMenu>
+				    </div>
+				</div>
+				<br/>
+            </c:forEach>
+            <br/>
+            <br/>
+            
+            <h:commandButton class="btn btn-primary" action="#{controller.salvar(pedido)}" value="Salvar" />
+            <a class="btn btn-secondary" href="index.xhtml">Cancelar</a>
+        </h:form>
+    </div>
+</ui:decorate>
